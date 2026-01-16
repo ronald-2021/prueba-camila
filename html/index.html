@@ -3,108 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora ROM Fisioterapia Pro v2</title>
+    <title>Calculadora ROM Fisioterapia</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-
     <div class="main-container">
         <h1>🏥 Calculadora ROM</h1>
-        <p class="subtitle">Evaluación Fisioterapéutica (Valores AAOS)</p>
+        <p class="subtitle">Protocolo Primo Ángel (AAOS)</p>
 
         <div class="joint-selector">
-            <label for="joint">Articulación a Evaluar:</label>
-            <select id="joint" onchange="updateLimits()">
+            <label for="joint">Articulación:</label>
+            <select id="joint" onchange="renderControls()">
                 <option value="hombro">Hombro</option>
                 <option value="codo">Codo</option>
-                <option value="muneca">Muñeca</option>
+                <option value="cuello">Cuello</option>
                 <option value="cadera">Cadera</option>
                 <option value="rodilla">Rodilla</option>
                 <option value="tobillo">Tobillo</option>
-                <option value="cuello">Cuello (Cervical)</option>
             </select>
         </div>
 
-        <div class="control-row">
-            <div class="label-container">
-                <label>Flexión</label>
-                <span id="hint-flex" class="ref-hint">Ref: 180°</span>
-            </div>
-            <div class="input-group">
-                <input type="range" id="range-flex" min="0" max="180" value="0" oninput="syncVal('flex', this.value)">
-                <input type="number" id="num-flex" min="0" max="360" value="0" oninput="syncVal('flex', this.value)">
-            </div>
-        </div>
+        <div id="sliders-container"></div>
 
-        <div class="control-row">
-            <div class="label-container">
-                <label>Extensión</label>
-                <span id="hint-ext" class="ref-hint">Ref: 60°</span>
-            </div>
-            <div class="input-group">
-                <input type="range" id="range-ext" min="0" max="180" value="0" oninput="syncVal('ext', this.value)">
-                <input type="number" id="num-ext" min="0" max="360" value="0" oninput="syncVal('ext', this.value)">
-            </div>
-        </div>
-
-        <div class="control-row">
-            <div class="label-container">
-                <label>Rotación </label>
-                <span id="hint-rot" class="ref-hint">Ref: 90°</span>
-            </div>
-            <div class="input-group">
-                <input type="range" id="range-rot" min="0" max="180" value="0" oninput="syncVal('rot', this.value)">
-                <input type="number" id="num-rot" min="0" max="360" value="0" oninput="syncVal('rot', this.value)">
-            </div>
-        </div>
-
-        <button class="btn-action" onclick="calcular()">Generar Informe y Sugerencias</button>
+        <button class="btn-action" onclick="calcular()">Calcular</button>
 
         <div id="results-area">
-            
             <div class="results-card" id="numeric-card">
-                <div class="data-summary">
-                    <div class="data-item"><small>Flexión</small><span id="show-flex">0°</span></div>
-                    <div class="data-item"><small>Extensión</small><span id="show-ext">0°</span></div>
-                    <div class="data-item"><small>Rot.</small><span id="show-rot">0°</span></div>
-                </div>
-
+                <div id="input-summary" class="data-summary"></div>
                 <div class="res-row">
-                    <span>Déficit Porcentual:</span>
+                    <span>Déficit Global:</span>
                     <span id="res-deficit" class="big-result">0%</span>
                 </div>
                 <div class="res-row">
-                    <span>Interpretación:</span>
+                    <span>Estado:</span>
                     <strong id="res-level">--</strong>
                 </div>
             </div>
 
             <div class="suggestions-box">
-                <h3>Sugerencias de Intervención</h3>
-                <div id="suggestions-content">
-                    </div>
+                <h3>📋 Sugerencias</h3>
+                <div id="suggestions-content"></div>
             </div>
-
-        </div>
-
-        <div class="reference-section">
-            <button class="toggle-ref" onclick="toggleTable()">⬇ Ver Valores Normales (AAOS)</button>
-            <table id="ref-table">
-                <thead><tr><th>Zona</th><th>Flex</th><th>Ext</th><th>Rot/Otros</th><th>Ref. Total</th></tr></thead>
-                <tbody>
-                    <tr><td>Hombro</td><td>180°</td><td>60°</td><td>90° (Ext)</td><td>330°</td></tr>
-                    <tr><td>Codo</td><td>150°</td><td>0°</td><td>80° (Prono)</td><td>230°</td></tr>
-                    <tr><td>Muñeca</td><td>80°</td><td>70°</td><td>30° (Desv)</td><td>180°</td></tr>
-                    <tr><td>Cadera</td><td>120°</td><td>30°</td><td>45° (Ext)</td><td>195°</td></tr>
-                    <tr><td>Rodilla</td><td>135°</td><td>0°</td><td>0°</td><td>135°</td></tr>
-                    <tr><td>Tobillo</td><td>50°</td><td>20°</td><td>35° (Inv)</td><td>105°</td></tr>
-                    <tr><td>Cuello</td><td>45°</td><td>45°</td><td>60° (Rot)</td><td>150°</td></tr>
-                </tbody>
-            </table>
         </div>
     </div>
-
     <script src="../js/app.js"></script>
 </body>
-
 </html>
