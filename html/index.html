@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculadora ROM Fisioterapia</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <h1>🏥 Calculadora ROM</h1>
+
+        <p class="subtitle">AAOS</p>
+
+
+
+        <div class="joint-selector">
+
+            <label for="joint">Articulación:</label>
+
+            <select id="joint" onchange="renderControls()">
+
+                <option value="hombro">Hombro</option>
+
+                <option value="codo">Codo</option>
+
+                <option value="cuello">Cuello</option>
+
+                <option value="cadera">Cadera</option>
+
+                <option value="rodilla">Rodilla</option>
+
+                <option value="tobillo">Tobillo</option>
+
+                <option value="muneca">Muñeca</option>
+
+            </select>
+
+        </div>
+
+
+
+        <div id="sliders-container"></div>
+
+
+
+        <button class="btn-action" onclick="calcular()">Calcular</button>
+
+
+
+        <div id="results-area">
+
+            <div class="results-card" id="numeric-card">
+
+                <div id="input-summary" class="data-summary"></div>
+
+                <div class="res-row">
+
+                    <span>Déficit Global:</span>
+
+                    <span id="res-deficit" class="big-result">0%</span>
+
+                </div>
+
+                <div class="res-row">
+
+                    <span>Estado:</span>
+
+                    <strong id="res-level">--</strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="suggestions-box">
+
+                <h3>📋 Sugerencias</h3>
+
+                <div id="suggestions-content"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="../js/app.js"></script>
+
+</body>
+
+
+
+</html>
