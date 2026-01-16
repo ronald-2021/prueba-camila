@@ -11,6 +11,13 @@ const jointsData = {
         { id: 'pron', name: 'Pronación', normal: 80 },
         { id: 'sup', name: 'Supinación', normal: 80 }
     ],
+    muneca: [
+        { id: 'flex', name: 'Flexión', normal: 80 },
+        { id: 'ext', name: 'Extensión', normal: 70 },
+        { id: 'des_rad', name: 'Desv. Radial', normal: 20 },
+        { id: 'des_cub', name: 'Desv. Cubital', normal: 30 },
+        { id: 'circ', name: 'Circunducción', normal: 360 }
+    ],
     cuello: [
         { id: 'flex', name: 'Flexión', normal: 45 },
         { id: 'ext', name: 'Extensión', normal: 45 },
