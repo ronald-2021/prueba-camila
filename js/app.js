@@ -85,10 +85,10 @@ function calcular() {
         htmlSugerencias = `
             <p style="margin-bottom:15px; color:#0d47a1;"><strong>⚠ Atención:</strong> El paciente excede los rangos fisiológicos normales.</p>
             <ul class="suggestions-list">
-                <li><strong>❌ NO ESTIRAR:</strong> Evitar aumentar el rango.</li>
-                <li><strong>✔ Ejercicios de Estabilidad:</strong> Fortalecimiento isométrico y control motor.</li>
-                <li><strong>✔ Propiocepción:</strong> Mejorar la conciencia articular.</li>
-                <li><strong>✔ Fortalecimiento muscular:</strong> Para proteger la articulación inestable.</li>
+                <li><strong>NO ESTIRAR:</strong> Evitar aumentar el rango.</li>
+                <li><strong>Ejercicios de Estabilidad:</strong> Fortalecimiento isométrico y control motor.</li>
+                <li><strong>Propiocepción:</strong> Mejorar la conciencia articular.</li>
+                <li><strong>Fortalecimiento muscular:</strong> Para proteger la articulación inestable.</li>
             </ul>
             <div class="objective" style="border-left-color:#2962ff; background:#e3f2fd;">Objetivo: Ganar estabilidad y control, NO movilidad.</div>`;
 
@@ -155,4 +155,5 @@ function calcular() {
 }
 
 // Inicializar
+
 updateLimits();
