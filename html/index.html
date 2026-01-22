@@ -1,72 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora ROM Fisioterapia</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora ROM Fisioterapia</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+
+  <!-- CARGAS EXPLÍCITAS (para que el botón funcione siempre) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-    <div class="main-container">
-        <h1>🏥 Calculadora ROM</h1>
-           <p class="subtitle">Herramienta de apoyo, no reemplaza la valoración clínica</p>
+  <div class="main-container">
+    <h1>🏥 Calculadora ROM</h1>
+    <p class="subtitle">Herramienta de apoyo, no reemplaza la valoración clínica</p>
 
-        <div class="joint-selector">
-            <label for="joint">Articulación:</label>
-            <select id="joint" onchange="renderControls()">
-                <option value="hombro">Hombro</option>
-                <option value="codo">Codo</option>
-                <option value="muneca">Muñeca</option>
-                <option value="cuello">Cuello</option>
-                <option value="cadera">Cadera</option>
-                <option value="rodilla">Rodilla</option>
-                <option value="tobillo">Tobillo</option>
-            </select>
-        </div>
-
-        <div id="sliders-container"></div>
-
-        <button class="btn-action" onclick="calcular()">Calcular</button>
-
-        <div id="results-area">
-            <div class="results-card" id="numeric-card">
-                <div id="input-summary" class="data-summary"></div>
-                <div class="res-row">
-                    <span>Déficit Global:</span>
-                    <span id="res-deficit" class="big-result">0%</span>
-                </div>
-                <div class="res-row">
-                    <span>Estado:</span>
-                    <strong id="res-level">--</strong>
-                </div>
-            </div>
-
-            <div class="suggestions-box">
-                <h3>📋 Sugerencias</h3>
-                <div id="suggestions-content"></div>
-                <div style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
-                   <h4> Puedes verifica la imformación en sitios oficiales </h4>
-                <a href="https://www.aaos.org" target="_blank" style="display:block; text-align:center; margin-top:15px; color:#d32f2f; text-decoration:none; font-weight:bold;">🔗 Ver Fuente Oficial (AAOS)</a>
-                </div>
-            </div>
-
-            <button class="btn-export" onclick="mostrarVistaPrevia()">👁️ Generar Vista Previa PDF</button>
-        </div>
+    <div class="joint-selector">
+      <label for="joint">Articulación:</label>
+      <select id="joint" onchange="renderControls()">
+        <option value="hombro">Hombro</option>
+        <option value="codo">Codo</option>
+        <option value="muneca">Muñeca</option>
+        <option value="cuello">Cuello</option>
+        <option value="cadera">Cadera</option>
+        <option value="rodilla">Rodilla</option>
+        <option value="tobillo">Tobillo</option>
+      </select>
     </div>
 
-    <div id="preview-overlay">
-        <div class="preview-content">
-            <div class="preview-controls">
-                <button class="btn-cancel" onclick="cerrarVistaPrevia()">❌ Cancelar</button>
-                <button class="btn-download" onclick="descargarPDFFinal()">📥 Descargar Ahora</button>
-            </div>
-            <div id="report-paper"></div>
+    <div class="meta-form">
+      <div class="meta-row">
+        <div class="meta-field">
+          <label for="patientName">Paciente (opcional)</label>
+          <input id="patientName" type="text" placeholder="Ej: Juan Pérez" />
         </div>
+
+        <div class="meta-field">
+          <label for="evaluatorName">Evaluador (opcional)</label>
+          <input id="evaluatorName" type="text" placeholder="Ej: Ronald Torres" />
+        </div>
+      </div>
+
+      <div class="meta-field">
+        <label for="observations">Observaciones (opcional)</label>
+        <textarea id="observations" rows="3" placeholder="Notas breves..."></textarea>
+      </div>
     </div>
 
-    <script src="../js/app.js"></script>
+    <div id="sliders-container"></div>
+
+    <button class="btn-action" onclick="calcular()">Calcular</button>
+
+    <div id="results-area">
+      <div class="results-card" id="numeric-card">
+        <div id="input-summary" class="data-summary"></div>
+        <div class="res-row">
+          <span>Déficit Global:</span>
+          <span id="res-deficit" class="big-result">0%</span>
+        </div>
+        <div class="res-row">
+          <span>Estado:</span>
+          <strong id="res-level">--</strong>
+        </div>
+      </div>
+
+      <div class="suggestions-box">
+        <h3>📋 Sugerencias</h3>
+        <div id="suggestions-content"></div>
+        <div style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
+          <a href="https://www.aaos.org" target="_blank"
+             style="color:#d32f2f; text-decoration:none; font-weight:bold;">
+            🔗 Fuente Oficial (AAOS)
+          </a>
+        </div>
+      </div>
+
+      <button class="btn-export" onclick="mostrarVistaPrevia()">👁️ Generar Vista Previa PDF</button>
+    </div>
+  </div>
+
+  <div id="preview-overlay">
+    <div class="preview-content">
+      <div class="preview-controls">
+        <button class="btn-cancel" onclick="cerrarVistaPrevia()">❌ Cancelar</button>
+        <button class="btn-download" onclick="descargarPDFFinal()">📥 Descargar Ahora</button>
+      </div>
+      <div id="report-paper"></div>
+    </div>
+  </div>
+
+  <script src="../js/app.js"></script>
 </body>
-
 </html>
