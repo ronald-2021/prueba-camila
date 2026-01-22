@@ -1,28 +1,40 @@
 :root {
-    --primary: #d32f2f; --primary-dark: #b71c1c;
-    --bg: #f8f9fa; --surface: #ffffff;
-    --text-main: #333; --border: #e0e0e0;
+  --primary: #d32f2f; --primary-dark: #b71c1c;
+  --bg: #f8f9fa; --surface: #ffffff;
+  --text-main: #333; --border: #e0e0e0;
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--bg); color: var(--text-main);
-    display: flex; justify-content: center; padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
 .main-container {
-    background: var(--surface); width: 100%; max-width: 600px;
-    padding: 2rem; border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid var(--primary);
+  background: var(--surface);
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-top: 5px solid var(--primary);
 }
 
 h1 { color: var(--primary); text-align: center; margin: 0; }
 .subtitle { text-align: center; color: #666; font-style: italic; margin-bottom: 25px; }
 
 select {
-    width: 100%; padding: 12px; border-radius: 8px;
-    border: 1px solid var(--border); font-size: 1rem; margin-bottom: 20px;
-    background: white; cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  margin-bottom: 20px;
+  background: white;
+  cursor: pointer;
 }
 
 .control-row { margin-bottom: 15px; background: #fff; padding: 10px; border-bottom: 1px solid #eee; }
@@ -33,20 +45,45 @@ input[type=range] { flex-grow: 1; cursor: pointer; accent-color: var(--primary);
 input[type=number] { width: 70px; padding: 8px; border: 1px solid #ccc; border-radius: 5px; text-align: center; font-weight: bold; color: var(--primary); }
 
 .btn-action {
-    width: 100%; background: var(--primary); color: white;
-    border: none; padding: 15px; font-size: 1.1rem; font-weight: bold;
-    border-radius: 8px; cursor: pointer; margin-top: 20px;
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 .btn-action:hover { background: var(--primary-dark); }
 
-#results-area { display: none; margin-top: 30px; animation: fadeIn 0.5s; background: white; padding: 10px; border-radius: 8px;}
+#results-area {
+  display: none;
+  margin-top: 30px;
+  animation: fadeIn 0.5s;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+}
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .results-card {
-    background: white; padding: 20px; margin-bottom: 20px;
-    border-left: 5px solid #ccc; border: 1px solid #eee;
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 5px solid #ccc;
+  border: 1px solid #eee;
 }
-.data-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed #ddd; }
+.data-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  text-align: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #ddd;
+}
 .data-item small { display: block; font-size: 0.7rem; color: #888; }
 .data-item span { font-weight: bold; font-size: 1rem; }
 .res-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -57,80 +94,140 @@ input[type=number] { width: 70px; padding: 8px; border: 1px solid #ccc; border-r
 .suggestions-list { padding-left: 20px; line-height: 1.6; }
 
 .btn-export {
-    width: 100%; background: #2c3e50; color: white;
-    border: none; padding: 15px; font-size: 1rem; font-weight: 600;
-    border-radius: 8px; cursor: pointer; margin-top: 15px;
+  width: 100%;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
 }
 .btn-export:hover { background: #1a252f; }
 
-/* === ARREGLO DE LA VISTA PREVIA (SCROLL Y TAMAÑO) === */
-
+/* ===== Overlay Preview ===== */
 #preview-overlay {
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); 
-    z-index: 10000;
-    display: none; 
-    /* Esto permite el scroll vertical si la hoja es muy larga */
-    overflow-y: auto; 
-    padding: 20px 0; /* Espacio arriba y abajo */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 10000;
+  display: none;
+  overflow-y: auto;
+  padding: 20px 0;
 }
 
 .preview-content {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    width: 100%;
-    /* Asegura que haya espacio al final para scrollear */
-    padding-bottom: 50px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 50px;
 }
 
-/* La barra de botones flotante y bonita */
 .preview-controls {
-    display: flex; 
-    gap: 15px; 
-    margin-bottom: 20px;
-    background: #fff;
-    padding: 10px 20px;
-    border-radius: 50px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    position: sticky;
-    top: 20px;
-    z-index: 10001;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  position: sticky;
+  top: 20px;
+  z-index: 10001;
 }
 
 .btn-download {
-    background: #27ae60; color: white; border: none; padding: 10px 20px;
-    font-size: 1rem; font-weight: bold; border-radius: 25px; cursor: pointer;
+  background: #27ae60; color: white;
+  border: none; padding: 10px 20px;
+  font-size: 1rem; font-weight: bold;
+  border-radius: 25px; cursor: pointer;
 }
 .btn-cancel {
-    background: #c0392b; color: white; border: none; padding: 10px 20px;
-    font-size: 1rem; font-weight: bold; border-radius: 25px; cursor: pointer;
+  background: #c0392b; color: white;
+  border: none; padding: 10px 20px;
+  font-size: 1rem; font-weight: bold;
+  border-radius: 25px; cursor: pointer;
 }
 
+/* ===== Papel A4 para vista previa ===== */
 #report-paper {
-    background: white;
-    width: 210mm; /* Ancho A4 */
-    /* min-height: 297mm;  <-- ELIMINAR O COMENTAR ESTO SI ESTORBA, O DEJARLO PERO ASEGURAR 'height: auto' */
-    min-height: 297mm; 
-    height: auto; /* IMPORTANTE: Permite que crezca si el contenido es largo */
-    padding: 20mm;
-    color: black;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-    /* Asegura que el fondo sea blanco al imprimir */
-    -webkit-print-color-adjust: exact; 
+  background: white;
+  width: 210mm;
+  min-height: 297mm;
+  height: auto;
+  padding: 15mm;
+  margin: 0 auto;
+  color: black;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
 }
 
-/* Estilos internos del reporte */
+.report-section, .report-result, .report-table {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.report-table tr, .report-table td, .report-table th {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* ===== Formulario meta ===== */
+.meta-form {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 18px;
+}
+.meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.meta-field label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #444;
+}
+.meta-field input,
+.meta-field textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  outline: none;
+}
+.meta-field textarea { resize: vertical; }
+@media (max-width: 520px) { .meta-row { grid-template-columns: 1fr; } }
+
+/* ===== Estilos internos del reporte ===== */
 .report-header { text-align: center; border-bottom: 3px solid #d32f2f; margin-bottom: 25px; padding-bottom: 10px; }
 .report-title { color: #d32f2f; margin: 0; font-size: 24px; text-transform: uppercase; }
-.report-meta { display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 14px; color: #444; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+.report-meta { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 14px; color: #444; border-bottom: 1px solid #eee; padding-bottom: 10px; gap: 20px; }
 .report-section { margin-bottom: 30px; }
-.report-section h3 { background: #333; color: white; padding: 8px 15px; margin: 0 0 15px 0; font-size: 16px; border-radius: 4px;}
+.report-section h3 { background: #333; color: white; padding: 8px 15px; margin: 0 0 15px 0; font-size: 16px; border-radius: 4px; }
 .report-table { width: 100%; border-collapse: collapse; }
 .report-table th, .report-table td { border: 1px solid #ccc; padding: 10px; text-align: center; font-size: 14px; }
 .report-table th { background: #f0f0f0; font-weight: bold; color: #000; }
-.report-result { font-size: 18px; margin: 10px 0; padding: 15px; border: 2px solid #eee; border-left: 5px solid #d32f2f; background: #fafafa; }
-.report-footer { text-align: center; margin-top: 50px; font-size: 11px; color: #777; border-top: 1px solid #ccc; padding-top: 15px; }   
+.report-result { font-size: 16px; margin: 10px 0; padding: 15px; border: 2px solid #eee; border-left: 5px solid #d32f2f; background: #fafafa; }
+.report-footer { text-align: center; margin-top: 50px; font-size: 11px; color: #777; border-top: 1px solid #ccc; padding-top: 15px; }
+
+/* ===== CLASE SOLO PARA EXPORTACIÓN (PX ESTABLE) ===== */
+.pdf-export {
+  width: 794px !important;       /* A4 aprox @96dpi */
+  min-height: 1123px !important; /* A4 aprox @96dpi */
+  padding: 56px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  background: #fff !important;
+}
