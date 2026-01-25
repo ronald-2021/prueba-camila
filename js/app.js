@@ -44,15 +44,49 @@ const jointsData = {
   ]
 };
 
-// Estado global para evitar reportes vacíos
+// Estado global
 let lastCalc = null;
+// joint seleccionado desde la vista de ingreso
+let selectedJointKey = 'hombro';
 
-function renderControls() {
-  const joint = document.getElementById('joint').value;
+function goToCalculator() {
+  // 1) guardar articulación seleccionada
+  const jointEl = document.getElementById('joint');
+  selectedJointKey = jointEl.value;
+
+  // 2) actualizar etiquetas de la barra
+  const jointText = jointEl.options[jointEl.selectedIndex].text;
+  document.getElementById('jointLabel').innerText = jointText;
+
+  const paciente = (document.getElementById('patientName').value || '').trim();
+  document.getElementById('patientLabel').innerText = paciente || '—';
+
+  // 3) cambiar vistas
+  document.getElementById('view-intake').style.display = 'none';
+  document.getElementById('view-calculator').style.display = 'block';
+
+  // 4) render sliders con el joint elegido
+  renderControls(selectedJointKey);
+}
+
+function backToIntake() {
+  document.getElementById('view-calculator').style.display = 'none';
+  document.getElementById('view-intake').style.display = 'block';
+
+  // opcional: ocultar resultados al volver
+  document.getElementById('results-area').style.display = 'none';
+  lastCalc = null;
+}
+
+/**
+ * Renderiza sliders usando el jointKey recibido
+ * (ya no dependemos del select, porque está en la otra vista)
+ */
+function renderControls(jointKey = selectedJointKey) {
   const container = document.getElementById('sliders-container');
   container.innerHTML = '';
 
-  jointsData[joint].forEach(mov => {
+  jointsData[jointKey].forEach(mov => {
     const max = (mov.id === 'circ') ? 360 : mov.normal + 30;
 
     container.insertAdjacentHTML('beforeend', `
@@ -82,7 +116,7 @@ function syncInput(id, val) {
 }
 
 function calcular() {
-  const jointKey = document.getElementById('joint').value;
+  const jointKey = selectedJointKey;
 
   let totalIdeal = 0;
   let totalPaciente = 0;
@@ -93,7 +127,6 @@ function calcular() {
     const val = Number(document.getElementById(`num-${mov.id}`).value) || 0;
     htmlRes += `<div class="data-item"><small>${mov.name}</small><span>${val}°</span></div>`;
 
-    // circunducción NO entra al déficit global
     if (mov.id !== 'circ') {
       totalIdeal += mov.normal;
       totalPaciente += Math.min(val, mov.normal);
@@ -112,7 +145,6 @@ function calcular() {
 
   let text = "", color = "", bg = "", sug = "";
 
-  // ===== NUEVOS PLANES =====
   if (deficit === 0 && isHyper) {
     text = "Hiperlaxitud";
     color = "#1565c0";
@@ -123,7 +155,6 @@ function calcular() {
       <li>Fortalecimiento progresivo y trabajo propioceptivo.</li>
     `;
   } else if (deficit <= 20) {
-    // 🟢 Limitación leve (0–20%)
     text = "Limitación leve (0–20%)";
     color = "#2e7d32";
     bg = "#e8f5e9";
@@ -137,7 +168,6 @@ function calcular() {
       <li><b>5. Estiramientos suaves:</b> mantener <b>20 segundos</b> sin dolor.</li>
     `;
   } else if (deficit <= 50) {
-    // 🟡 Limitación moderada (20–50%)
     text = "Limitación moderada (20–50%)";
     color = "#f9a825";
     bg = "#fffde7";
@@ -154,7 +184,6 @@ function calcular() {
       <li><b>5. Crioterapia posterior (si inflamación):</b> 10 min.</li>
     `;
   } else {
-    // 🔴 Limitación severa (>50%)
     text = "Limitación severa (>50%)";
     color = "#c62828";
     bg = "#ffebee";
@@ -195,12 +224,15 @@ function buildReportHTML() {
   const evaluador = (document.getElementById('evaluatorName')?.value || '').trim();
   const obs = (document.getElementById('observations')?.value || '').trim();
 
+  // Articulación desde el select (aunque esté oculto)
   const jointSelect = document.getElementById('joint');
   const articulacion = jointSelect.options[jointSelect.selectedIndex].text;
-  const jointKey = jointSelect.value;
+  const jointKey = selectedJointKey;
 
   const fecha = new Intl.DateTimeFormat('es-EC', {
-    dateStyle: 'full', timeStyle: 'short', timeZone: 'America/Guayaquil'
+    dateStyle: 'full',
+    timeStyle: 'short',
+    timeZone: 'America/Guayaquil'
   }).format(new Date());
 
   const deficit = document.getElementById('res-deficit').innerText;
@@ -277,13 +309,6 @@ function cerrarVistaPrevia() {
   document.getElementById('preview-overlay').style.display = 'none';
 }
 
-/**
- * Exportación robusta:
- * - Clona el reporte fuera de pantalla
- * - Fuerza layout en px (clase pdf-export)
- * - Renderiza con html2canvas
- * - Genera PDF con jsPDF UMD
- */
 async function descargarPDFFinal() {
   const reportPaper = document.getElementById('report-paper');
 
@@ -291,8 +316,8 @@ async function descargarPDFFinal() {
     reportPaper.innerHTML = buildReportHTML();
   }
 
-  const articulacion = document.getElementById('joint')
-    .options[document.getElementById('joint').selectedIndex].text;
+  const jointSelect = document.getElementById('joint');
+  const articulacion = jointSelect.options[jointSelect.selectedIndex].text;
 
   const exportWrap = document.createElement('div');
   exportWrap.style.position = 'fixed';
@@ -354,4 +379,5 @@ async function descargarPDFFinal() {
   }
 }
 
-renderControls();
+/* Estado inicial: NO renderizamos sliders hasta que den Continuar */
+    
