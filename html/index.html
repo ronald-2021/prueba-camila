@@ -16,70 +16,99 @@
     <h1>🏥 Calculadora ROM</h1>
     <p class="subtitle">Herramienta de apoyo, no reemplaza la valoración clínica</p>
 
-    <div class="joint-selector">
-      <label for="joint">Articulación:</label>
-      <select id="joint" onchange="renderControls()">
-        <option value="hombro">Hombro</option>
-        <option value="codo">Codo</option>
-        <option value="muneca">Muñeca</option>
-        <option value="cuello">Cuello</option>
-        <option value="cadera">Cadera</option>
-        <option value="rodilla">Rodilla</option>
-        <option value="tobillo">Tobillo</option>
-      </select>
-    </div>
+    <!-- =========================
+         VISTA 1: INGRESO DE DATOS
+         ========================= -->
+    <section id="view-intake" class="view-section">
+      <h2 class="section-title">1) Ingreso de datos</h2>
 
-    <div class="meta-form">
-      <div class="meta-row">
+      <div class="joint-selector">
+        <label for="joint">Articulación:</label>
+        <select id="joint">
+          <option value="hombro">Hombro</option>
+          <option value="codo">Codo</option>
+          <option value="muneca">Muñeca</option>
+          <option value="cuello">Cuello</option>
+          <option value="cadera">Cadera</option>
+          <option value="rodilla">Rodilla</option>
+          <option value="tobillo">Tobillo</option>
+        </select>
+      </div>
+
+      <div class="meta-form">
+        <div class="meta-row">
+          <div class="meta-field">
+            <label for="patientName">Paciente (opcional)</label>
+            <input id="patientName" type="text" placeholder="Ej: Juan Pérez" />
+          </div>
+
+          <div class="meta-field">
+            <label for="evaluatorName">Evaluador (opcional)</label>
+            <input id="evaluatorName" type="text" placeholder="Ej: Ronald Torres" />
+          </div>
+        </div>
+
         <div class="meta-field">
-          <label for="patientName">Paciente (opcional)</label>
-          <input id="patientName" type="text" placeholder="Ej: Juan Pérez" />
-        </div>
-
-        <div class="meta-field">
-          <label for="evaluatorName">Evaluador (opcional)</label>
-          <input id="evaluatorName" type="text" placeholder="Ej: Ronald Torres" />
+          <label for="observations">Observaciones (opcional)</label>
+          <textarea id="observations" rows="3" placeholder="Notas breves..."></textarea>
         </div>
       </div>
 
-      <div class="meta-field">
-        <label for="observations">Observaciones (opcional)</label>
-        <textarea id="observations" rows="3" placeholder="Notas breves..."></textarea>
-      </div>
-    </div>
+      <button class="btn-action" onclick="goToCalculator()">➡️ Continuar a la calculadora</button>
+    </section>
 
-    <div id="sliders-container"></div>
 
-    <button class="btn-action" onclick="calcular()">Calcular</button>
-
-    <div id="results-area">
-      <div class="results-card" id="numeric-card">
-        <div id="input-summary" class="data-summary"></div>
-        <div class="res-row">
-          <span>Déficit Global:</span>
-          <span id="res-deficit" class="big-result">0%</span>
-        </div>
-        <div class="res-row">
-          <span>Estado:</span>
-          <strong id="res-level">--</strong>
+    <!-- =========================
+         VISTA 2: CALCULADORA
+         ========================= -->
+    <section id="view-calculator" class="view-section" style="display:none;">
+      <div class="toolbar">
+        <button class="btn-back" onclick="backToIntake()">⬅️ Volver a datos</button>
+        <div class="toolbar-info">
+          <span class="tag"><b>Articulación:</b> <span id="jointLabel">—</span></span>
+          <span class="tag"><b>Paciente:</b> <span id="patientLabel">—</span></span>
         </div>
       </div>
 
-      <div class="suggestions-box">
-        <h3>📋 Sugerencias</h3>
-        <div id="suggestions-content"></div>
-        <div style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
-          <a href="https://www.aaos.org" target="_blank"
-             style="color:#d32f2f; text-decoration:none; font-weight:bold;">
-            🔗 Fuente Oficial (AAOS)
-          </a>
-        </div>
-      </div>
+      <h2 class="section-title">2) Calculadora</h2>
 
-      <button class="btn-export" onclick="mostrarVistaPrevia()">👁️ Generar Vista Previa PDF</button>
-    </div>
+      <div id="sliders-container"></div>
+
+      <button class="btn-action" onclick="calcular()">Calcular</button>
+
+      <div id="results-area">
+        <div class="results-card" id="numeric-card">
+          <div id="input-summary" class="data-summary"></div>
+          <div class="res-row">
+            <span>Déficit Global:</span>
+            <span id="res-deficit" class="big-result">0%</span>
+          </div>
+          <div class="res-row">
+            <span>Estado:</span>
+            <strong id="res-level">--</strong>
+          </div>
+        </div>
+
+        <div class="suggestions-box">
+          <h3>📋 Sugerencias</h3>
+          <div id="suggestions-content"></div>
+          <div style="margin-top:20px; border-top:1px solid #ccc; padding-top:10px;">
+            <a href="https://www.aaos.org" target="_blank"
+               style="color:#d32f2f; text-decoration:none; font-weight:bold;">
+              🔗 Fuente Oficial (AAOS)
+            </a>
+          </div>
+        </div>
+
+        <button class="btn-export" onclick="mostrarVistaPrevia()">👁️ Generar Vista Previa PDF</button>
+      </div>
+    </section>
+
   </div>
 
+  <!-- =========================
+       OVERLAY PDF
+       ========================= -->
   <div id="preview-overlay">
     <div class="preview-content">
       <div class="preview-controls">
